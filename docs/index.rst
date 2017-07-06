@@ -5,7 +5,7 @@
 
 Welcome to django-music's documentation!
 ========================================
-
+The best site and place to use read the docs
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
