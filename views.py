@@ -1,3 +1,4 @@
+from django.db.models import Q #just import this 'Q' object...
 from django.views import generic
 from django.views.generic.edit import CreateView,UpdateView,DeleteView 
 from .models import Album
@@ -8,7 +9,21 @@ class IndexView (generic.ListView):
 	context_object_name='all_albums'
 
 	def get_queryset(self):
-		return Album.objects.all()
+		#return Album.objects.all()
+		#Adding a search for all the album...
+		query = self.request.GET.get('q')
+		album_qs = Album.objects.filter(
+			Q(album_title__icontains='query') | Q(artist__icontains='query')
+		).distinct()
+		return album_qs
+	
+		'''
+		# - In your HTML you add this
+
+		<form action="{% url 'index' %}" method="get">
+		  <input name="q" type="text" placeholder="Search...">
+		</form>
+		'''
 
 class DetailView(generic.DetailView):
 	model = Album;
